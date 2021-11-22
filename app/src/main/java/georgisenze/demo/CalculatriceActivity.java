@@ -1,35 +1,23 @@
 package georgisenze.demo;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import georgisenze.demo.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-
-public class MainActivity extends AppCompatActivity {
+public class CalculatriceActivity extends AppCompatActivity {
 
     String oldNumero = "";
     String op = "+";
     EditText edi;
     boolean isNewOp = true;
     boolean moinsNumber = false;
+    boolean virg = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.calculatrice_main);
 
         edi = findViewById(R.id.ediText);
     }
@@ -83,17 +71,29 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.buVirgule:
-                numero += ".";
+                for (int i=0; i<numero.length(); i++){
+                    if (numero.charAt(i)=='.'){
+                        virg = true;
+                    }
+                    if (!virg){
+                        numero += ".";
+                    }
+                }
+
                 break;
 
             case R.id.buPlusMoin:
                 for (int i=0; i<numero.length(); i++){
                     if (numero.charAt(i)=='-'){
                         moinsNumber = true;
-                    }else
-                        numero = "-"+numero;
+                    }
+                if(!moinsNumber){
+                    numero = "-" + numero;
+                    }
                 }
-               ;
+                break;
+
+            default:
                 break;
         }
         edi.setText(numero);
